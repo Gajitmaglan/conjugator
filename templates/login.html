@@ -1,0 +1,11 @@
+<h1>Hello, {{email if email}}</h1>
+
+<form method="POST">
+    <input 
+        type="email"
+        name="email"
+        placeholder="example_email@email.com"
+        value="{{ email if email }}"
+    />
+    <input type="submit" value="submit"/>
+</form>

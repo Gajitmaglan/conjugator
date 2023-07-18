@@ -1,0 +1,169 @@
+{% extends "form.html" %}
+
+{% block main %}
+
+
+<h1>Hello from French html page</h1>
+{% if no_verb_in_db %}
+<h3>{{ no_verb_in_db }}</h3>
+{% endif %}
+
+{% if ("Être" in conjugate_with) and ("Avoir" in conjugate_with) %}
+<section>
+    <button id="switcher"> S W I T C H avoir/etre </button>
+</section>
+{% endif %}
+
+<h2>this verb conjugates with: {{ conjugate_with }}</h2>
+
+<h1>French Verb Conjugations for <br> <strong>{{ verb }}</strong></h1>
+{% set type = "Indicatif" %}
+
+<h2>Indicativo Mood</h2>                  <!---  ------   -------  ---------------------------  --->
+<section>
+    {% for tense in fr.indicative_tenses %}
+    <div class="tenseBox">
+        <h3>{{ tense }}</h3>
+        <hr>
+        <table>
+            <tr><th>&nbsp;</th><th>&nbsp;</th></tr>
+            {% for p in fr.person %}
+            <tr>
+                {% if clearOutput(p, tense) == None %}
+                <th>{{ p }}</th>
+                {% else %}
+                <th>{{ clearOutput(p, tense) }}</th>
+                {% endif %}
+                <td>{{ conjugations[type][tense][p]}}</td>
+            </tr>
+            {% endfor %}
+            <tr><th>&nbsp;</th><th>&nbsp;</th></tr>
+        </table>
+    </div>
+    {% endfor %}
+    {% for tense in ['Passé composé', 'Plus-que-parfait', 'Passé antérieur', 'Futur antérieur'] %}
+    <div class="tenseBox">
+        <h3>{{ tense }}</h3>
+        <hr>
+        <table>
+            <tr><th>&nbsp;</th><th>&nbsp;</th></tr>
+            {% for p in fr.person %}
+            <tr>
+                {% if clearOutput_avoir(p, tense) == None %}
+                <th>{{ p }}</th>
+                {% else %}
+                <th>{{ clearOutput_avoir(p, tense) }}</th>
+                {% endif %}
+                <td>{{ conjugations['Participe']['Participe Passé']['masculin singulier'] }}</td>
+            </tr>
+            {% endfor %}
+            <tr><th>&nbsp;</th><th>&nbsp;</th></tr>
+        </table>
+    </div>
+    {% endfor %}
+</section>
+<h2>Subjunctivo Mood</h2>                  <!---  ------   -------  ---------------------------  --->
+<section>
+    {% for tense in fr.subjunctive %}
+    <div class="tenseBox">
+        <h3>{{ tense }}</h3>
+        <hr>
+        <table>
+            <tr><th>&nbsp;</th><th>&nbsp;</th></tr>
+            {% for p in fr.person %}
+            <tr>
+                {% if clearOutput_avoir(p, tense) == None %}
+                <th>{{ p }}</th>
+                {% else %}
+                <th>{{ clearOutput_avoir(p, tense) }}</th>
+                {% endif %}
+                <td>{{ conjugations['Subjonctif'][tense][p] }}</td>
+            </tr>
+            {% endfor %}
+            <tr><th>&nbsp;</th><th>&nbsp;</th></tr>
+        </table>
+    </div>
+    {% endfor %}
+    {% for tense in fr.subjunctive_complex %}
+    <div class="tenseBox">
+        <h3>{{ tense }}</h3>
+        <hr>
+        <table>
+            <tr><th>&nbsp;</th><th>&nbsp;</th></tr>
+            {% for p in fr.person %}
+            <tr>
+                {% if clearOutput_avoir(p, tense) == None %}
+                <th>{{ p }}</th>
+                {% else %}
+                <th>{{ clearOutput_avoir(p, tense) }}</th>
+                {% endif %}
+                <td>{{ conjugations['Participe']['Participe Passé']['masculin singulier'] }}</td>
+            </tr>
+            {% endfor %}
+            <tr><th>&nbsp;</th><th>&nbsp;</th></tr>
+        </table>
+    </div>
+    {% endfor %}
+</section>
+<h2>Conditional Mood</h2>
+<section>
+    <div class="tenseBox">
+        <h3>Présent</h3>
+        <hr>
+        <table>
+            <tr><th>&nbsp;</th><th>&nbsp;</th></tr>
+            {% for p in fr.person %}
+            <tr>
+                {% if clearOutput_avoir(p, tense) == None %}
+                <th>{{ p }}</th>
+                {% else %}
+                <th>{{ clearOutput_avoir(p, tense) }}</th>
+                {% endif %}
+                <td>{{ conjugations['Conditionnel']['Présent'][p] }}</td>
+            </tr>
+            {% endfor %}
+            <tr><th>&nbsp;</th><th>&nbsp;</th></tr>
+        </table>
+    </div>
+    {% for tense in fr.conditional_complex %}
+    <div class="tenseBox">
+        <h3>{{ tense }}</h3>
+        <hr>
+        <table>
+            <tr><th>&nbsp;</th><th>&nbsp;</th></tr>
+            {% for p in fr.person %}
+            <tr>
+                {% if clearOutput_avoir(p, tense) == None %}
+                <th>{{ p }}</th>
+                {% else %}
+                <th>{{ clearOutput_avoir(p, tense) }}</th>
+                {% endif %}
+                <td>{{ conjugations['Participe']['Participe Passé']['masculin singulier'] }}</td>
+            </tr>
+            {% endfor %}
+            <tr><th>&nbsp;</th><th>&nbsp;</th></tr>
+        </table>
+    </div>
+    {% endfor %}
+</section>
+<h2>Autres</h2>
+<section>
+    <h3>Imperatif Présent</h3>
+    {{ conjugations['Imperatif']['Imperatif Présent'][''] }}
+    
+    <h3>Participe Présent</h3>
+    {{ conjugations['Participe']['Participe Présent'] }}
+    
+    <h3>Participe Participe Passé</h3>
+    {{ conjugations['Participe']['Participe Passé']['masculin singulier'] }}
+    {{ conjugations['Participe']['Participe Passé']['masculin pluriel'] }}
+    {{ conjugations['Participe']['Participe Passé']['feminin singulier'] }}
+    {{ conjugations['Participe']['Participe Passé']['feminin pluriel'] }}
+    
+    <h3>Participe Passé composé</h3>
+    {{ 'ayant ' + conjugations['Participe']['Participe Passé']['masculin singulier'] }}
+</section>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='tensesPage.css') }}">
+{% endblock %}

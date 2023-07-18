@@ -1,0 +1,164 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='tensesPage.css') }}">
+{% extends "form.html" %}
+
+{% block main %}
+
+<h1>Spanish Verb Conjugations for <br> <strong>{{ verb }}</strong></h1>
+{% set type = es.tenseTypesEs[0] %}
+
+<h2>Indicativo Mood</h2>
+<section>
+    {% for tense in es.Indicativo_tenses %}
+    <div class="tenseBox">
+        
+        <h3>{{ tense }}</h3>
+        <hr>
+        <table>
+            {% for p in es.person %}
+            <tr>
+                {% if clearOutput(p, tense) == None %}
+                <th>{{ p }}</th>
+                {% else %}
+                <th>{{ clearOutput(p, tense) }}</th>
+                {% endif %}
+                <td>{{ conjugations[type][tense][p]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endfor %}
+</section>
+
+{% set type = es.tenseTypesEs[1] %}
+
+<h2>Subjuntivo Mood</h2>
+<section>
+    {% for tense in es.Subjuntivo_tenses %}
+    <div class="tenseBox">
+        
+        <h3>{{ tense }}</h3>
+        <hr>
+        <table>
+            {% for p in es.person %}
+            <tr>
+                {% if clearOutput(p, tense) == None %}
+                <th>{{ p }}</th>
+                {% else %}
+                <th>{{ clearOutput(p, tense) }}</th>
+                {% endif %}
+                <td>{{ conjugations[type][tense][p]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endfor %}
+</section>
+
+<!-- --------------------------------------------------------------------- -->
+
+<section>
+    {% set type = es.tenseTypesEs[3] %}
+    
+    <div class="in-columns">
+        <h2>Condicional Mood</h2>
+    {% for tense in es.Condicional_tenses %}
+    <div class="tenseBox">
+        <h3>{{ tense }}</h3>
+        <hr>
+        <table>
+            {% for p in es.person %}
+            <tr>
+                {% if clearOutput(p, tense) == None %}
+                <th class="thPers">{{ p }}</th>
+                {% else %}
+                <th class="thPers">{{ clearOutput(p, tense) }}</th>
+                {% endif %}
+                <td class="thMain">{{ conjugations[type][tense][p]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endfor %}
+</div>
+
+{% set type = es.tenseTypesEs[2] %}
+    
+<div class="in-columns">
+    <h2>Imperativo Mood</h2>
+<div class="tenseBox">
+    <h3>Imperativo Afirmativo</h3>
+    <hr>
+    <table>
+        {% for p in es.person %}
+        <tr>
+            {% if clearOutput(p, 'Imperativo Afirmativo') == None %}
+            <th class="thPers">{{ p }}</th>
+            {% else %}
+            <th class="thPers">{{ clearOutput(p, 'Imperativo Afirmativo') }}</th>
+            {% endif %}
+            <td class="thMain">{{ conjugations[type]['Imperativo Afirmativo'][p]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+    <div class="tenseBox">
+    <h3>Imperativo non</h3>
+    <hr>
+    <table>
+        {% for p in ('yo no', 'tú no', 'él no', 'nosotros no', 'vosotros no', 'ellos no') %}
+        <tr>
+            {% if clearOutput(p, 'Imperativo non') == None %}
+            <th class="thPers">{{ p }}</th>
+            {% else %}
+            <th class="thPers">{{ clearOutput(p, 'Imperativo non') }}</th>
+            {% endif %}
+            <td class="thMain">{{ conjugations[type]['Imperativo non'][p]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</div>
+
+</section>
+
+{% set type = es.tenseTypesEs[4] %}
+
+<h2>Otros</h2>
+<section>
+    <div class="tenseBox">
+        <h3>Infinitivo</h3>
+        <hr>
+        <table>
+            <tr>
+                <th class="thPers">Infinitivo:</th>
+                <td class="thMain">{{ conjugations[type]['Infinitivo Infinitivo']['']}}</td>
+            </tr>
+        </table>
+    </div>
+        
+    {% set type = es.tenseTypesEs[5] %}
+    <div class="tenseBox">
+        <h3>Gerundio</h3>
+        <hr>
+        <table>
+            <tr>
+                <th class="thPers">Gerundio:</th>
+                <td class="thMain">{{ conjugations[type]['Gerundio Gerondio']['']}}</td>
+            </tr>
+        </table>
+    </div>
+
+    {% set type = es.tenseTypesEs[6] %}
+    <div class="tenseBox">
+        <h3>Particípio</h3>
+        <hr>
+        <table>
+            <tr>
+                <th class="thPers">Participo:</th>
+                <td class="thMain">{{ conjugations[type]['Participo Participo']}}</td>
+            </tr>
+        </table>
+    </div>
+</section>
+
+{% endblock %}

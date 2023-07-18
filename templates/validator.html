@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<h1 style="text-align: center;">Level: {{ lvl_nr }}</h1>
+<h2 data-sequence="">{{ verb_sequence }}</h2>
+<h2> Language: {{ language }}</h2>
+<h2> Mood - {{ mood }}, Tense - {{ tense }} </h2>
+
+<form method="GET" style="background-color: #A35709; padding: 5rem 0; font-size: 1.5rem;">
+    <div>
+        <label for="1s">1s: </label>
+        <input id="1s" type="text"><br>
+        <div id="answer-1s">answer for 1s</div>
+        <label for="2s">2s: </label>
+        <input id="2s" type="text"><br>
+        <div id="answer-2s">answer for 2s</div>
+        <label for="3s">3s: </label>
+        <input id="3s" type="text">
+        <div id="answer-3s">answer for 3s</div>
+    </div>
+    <div>
+        <label for="1p">1p: </label>
+        <input id="1p" type="text"><br>
+        <div id="answer-1p">answer for 1p</div>
+        <label for="2p">2p: </label>
+        <input id="2p" type="text"><br>
+        <div id="answer-2p">answer for 2p</div>
+        <label for="3p">3p: </label>
+        <input id="3p" type="text">
+        <div id="answer-3p">answer for 3p</div>
+    </div>
+    <button id="next-verb-btn">Next verb</button>
+</form>
+
+<script>
+    var verb_sequence = {{ verb_sequence|tojson }};
+    console.log("rom validator.html: " + verb_sequence);
+</script>
+<script src="{{ url_for('static', filename='validator.js') }}"></script>
+{% endblock %}

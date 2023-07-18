@@ -1,0 +1,257 @@
+{% extends "base.html" %}
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+
+
+
+<h1>Hello from Index (form page)</h1>
+
+{% block form %}
+
+<form method="post">
+    <!-- <label for="verb">Enter a verb:</label><br> -->
+    <div id="search-box">
+        <input type="text" id="verb" name="verb" required autocomplete="off">
+        <div id="search-results"></div>
+    </div>
+    <button type="submit">conjugate</button>
+</form>
+<div style="height: 7rem; width: 5rem; background-color: transparent;"></div>
+<div id="menu">
+  <div id="wrapper">
+    <div class="tabs">
+      <div class="tab">
+        <img src="{{ url_for('static', filename='/SVG/shrimp.png') }}" alt="">
+        <div class="tab-text">A1-B1</div>
+      </div>
+      <div class="tab">
+        <img src="{{ url_for('static', filename='/SVG/sea-snail.png') }}" alt="">
+        <div class="tab-text">B2</div>
+      </div>
+      <div class="tab">
+        <img src="{{ url_for('static', filename='/SVG/seashell.png') }}" alt="">
+        <div class="tab-text">C1 part 1</div>
+      </div>
+      <div class="tab">
+        <img src="{{ url_for('static', filename='/SVG/butterfly.png') }}" alt="">
+        <div class="tab-text">C1 part 2</div>
+      </div>
+    </div>
+  <div id="A1">
+    {% for i in range(1, 6) %}
+      <div data-lvl="{{ i }}" class="a1 level">{% include 'SVG/' ~ i ~ '.svg' %}</div>
+    {% endfor %}
+  <!-- </div>
+  <div id="A2"> -->
+    {% for i in range(6, 11) %}
+      <div data-lvl="{{ i }}" class="a2 level">{% include 'SVG/' ~ i ~ '.svg' %}</div>
+    {% endfor %}
+  <!-- </div>
+  <div id="B1"> -->
+    {% for i in range(11, 21) %}
+      <div data-lvl="{{ i }}" class="b1 level">{% include 'SVG/' ~ i ~ '.svg' %}</div>
+    {% endfor %}
+  </div>
+  <div id="B2">
+    {% for i in range(1, 21) %}
+      <div data-lvl="{{ i }}" class="b2 level">{% include 'SVG/' ~ i ~ '.svg' %}</div>
+    {% endfor %}
+  </div>
+  <div id="C1_part1">
+    {% for i in range(1, 21) %}
+      <div data-lvl="{{ i }}" class="c1 level">{% include 'SVG/' ~ i ~ '.svg' %}</div>
+    {% endfor %}
+  </div>
+  <div id="C1_part2">
+    {% for i in range(1, 6) %}
+      <div data-lvl="{{ i }}" class="c1 level">{% include 'SVG/' ~ i ~ '.svg' %}</div>
+    {% endfor %}
+  </div>
+  </div>
+</div>
+<div id="wrapper" class="moods-and-tenses italian">
+  <div id="data-holder">
+    <div class="moods">
+      <!-- <div>select a mood</div> -->
+      <div class="mood">{{ it.moodsIt[0] }}</div>
+      <div class="mood">{{ it.moodsIt[1] }}</div>
+      <div class="mood">{{ it.moodsIt[2] }}, {{ it.moodsIt[3] }}</div>
+      <div class="mood">{{ it.moodsIt[4] }}, {{ it.moodsIt[5] }}</div>
+    </div>
+    <div class="tenses">
+    </div>
+  </div>
+</div>
+
+<div style="height: 10rem; width: 5rem; background-color: transparent;"></div>
+<style>
+  .level {
+    display: inline-block;
+    width: 5rem;
+    height: 5rem;
+    background-color: red;
+    margin: 5px;
+  }
+  .a1 {background-color: #1B1A17; fill: #A35709;}
+  .a2 {background-color: #1B1A17; fill: #A35709;}
+  .b1 {background-color: #1B1A17; fill: #A35709;}
+  .b2 {background-color: #1B1A17; fill: #A35709;}
+  .c1 {background-color: #1B1A17; fill: #A35709;}
+
+  .tabs {
+    height: 3rem;
+    background-color: #1b1a1750;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 1rem;
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .tab {
+    position: relative;
+    /* bottom: 0.5rem; */
+
+    width: 6rem;
+    margin: 0 1rem 1rem 1rem;
+    height: 2rem;
+
+    border-bottom-right-radius: 50%;
+    border-bottom-left-radius: 50%;
+    /* border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px; */
+
+    background-color: #1B1A1730;
+    /* background-color: #fff; */
+    color: #fff;
+    text-align: center;
+  }
+  .tab:hover {
+    background-color: #A35709;
+  }
+  .tab img {
+    height: 3rem;
+    position: relative;
+    bottom: 1.5rem;
+    border-radius: 33%;
+
+    filter: grayscale(90%) contrast(50%);
+  }
+  .tab:hover img {
+    filter: grayscale(0%) contrast(100%);
+    /* box-shadow: 0 20px 20px 20px rgba(0, 0, 0, 0.4); */
+    /* background-color: #fff; */
+  }
+
+  #wrapper {
+    padding: 0;
+    width: calc((6rem * 5));
+    background-color: #1b1a1770;
+    margin-left: 3rem;
+    margin-right: auto;
+    /* margin-top: 5rem; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  #A1, #A2, #B1, #B2, #C1_part1, #C1_part2 {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: inherit;
+  }
+  #menu {
+    /* height: fit-content;
+    width: fit-content; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    align-content: flex-start;
+  }
+
+  #B2, #C1_part1, #C1_part2 {
+    display: none;
+  }
+</style>
+
+<style>
+  .moods {
+    background-color: #1b1a1770;
+    align-self: flex-start;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    float:left;
+  }
+  .tenses {
+    float:left;
+  }
+  .mood:hover, .tense:hover {
+    background-color: #A35709;
+    cursor: pointer;
+  }
+
+  .selected {
+    color: red;
+  }
+  .tab {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .tab img {
+    z-index: 1;
+  }
+  .tab .tab-text {
+    z-index: 0;
+    position: absolute;
+    visibility: hidden;
+
+    user-select: none;
+    -moz-user-select: none; /* For Firefox */
+    -webkit-user-select: none; /* For Chrome, Safari, and Opera */
+    -ms-user-select: none; /* For Internet Explorer/Edge */
+  }
+  .tab:hover .tab-text {
+    visibility: visible;
+  }
+  .tab:hover img {
+    animation: jump ease-out 1s infinite;
+  }
+
+  @keyframes jump {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+</style>
+
+
+<link rel="stylesheet" href="{{ url_for('static', filename='search.css') }}">
+<script>
+  var it = {{ it|tojson }};
+  console.log(it);
+</script>
+<script src="{{ url_for('static', filename='form.js') }}"></script>
+{% endblock %}

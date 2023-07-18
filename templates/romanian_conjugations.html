@@ -1,0 +1,199 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='tensesPage.css') }}">
+{% extends "form.html" %}
+
+{% block main %}
+
+<h1>Romanian Verb Conjugations for <br> <strong>{{ verb }}</strong></h1>
+
+<h2>Indicativo Mood</h2>
+<section>
+    <div class="tenseBox">
+        <h3>Prezent</h3>
+        <hr>
+        <table>
+            {% for p in ro.person %}
+            <tr>
+                {% if clearOutput(p, 'Prezent Prezent') == None %}
+                <th>{{ p }}</th>
+                {% else %}
+                <th>{{ clearOutput(p, 'Prezent Prezent') }}</th>
+                {% endif %}
+                <td>{{ conjugations['Prezent']['Prezent Prezent'][p]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="tenseBox">
+        <h3>Imperfect</h3>
+        <hr>
+        <table>
+            {% for p in ro.person %}
+            <tr>
+                {% if clearOutput(p, 'Imperfect Imperfect') == None %}
+                <th>{{ p }}</th>
+                {% else %}
+                <th>{{ clearOutput(p, 'Imperfect Imperfect') }}</th>
+                {% endif %}
+                <td>{{ conjugations['Imperfect']['Imperfect Imperfect'][p]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% for tense in ('Perfect simplu', 'Perfect compus') %}
+    <div class="tenseBox">
+        <h3>{{ tense }}</h3>
+        <hr>
+        <table>
+            {% for p in ro.person %}
+            <tr>
+                {% if clearOutput(p, tense) == None %}
+                <th>{{ p }}</th>
+                {% else %}
+                <th>{{ clearOutput(p, tense) }}</th>
+                {% endif %}
+                <td>{{ conjugations['Perfect'][tense][p]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endfor %}
+    <div class="tenseBox">
+        <h3>Mai mult ca perfect</h3>
+        <hr>
+        <table>
+            {% for mood in conjugations.iterate() %}
+            {% if 'Mai' in mood[0] %}   <!-- sorry, but conjugations['Mai']["Mai mult ca perfect"][p] doesn't work -->
+            <tr>
+                <th>{{ mood[2] }}</th>
+                <td>{{ mood[3] }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+</section>
+
+<h2>Viitor</h2>
+<section>
+    {% for tense in ro.viitor_tenses %}
+    <div class="tenseBox">
+        <h3>{{ tense }}</h3>
+        <hr>
+        <table>
+            {% for p in ro.person %}
+            <tr>
+                {% if clearOutput(p, tense) == None %}
+                <th>{{ p }}</th>
+                {% else %}
+                <th>{{ clearOutput(p, tense) }}</th>
+                {% endif %}
+                <td>{{ conjugations['Viitor'][tense][p]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% if tense == "Viitor I" %}
+    <div class="tenseBox">
+        <h3>Viitor I popular old</h3>
+        <hr>
+        <table>
+            {% for p in ro.person %}
+            <tr>
+                {% if clearOutput(p, 'Viitor I popular 2') == None %}
+                <th>{{ p }}</th>
+                {% else %}
+                <th>{{ clearOutput(p, 'Viitor I popular 2') }}</th>
+                {% endif %}
+                <td>{{ conjugations['Viitor']['Viitor I'][p]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+    {% endfor %}
+</section>
+
+<section>
+<div class="in-columns">
+    <h2>Conditional</h2>
+    {% for tense in ro.Conditional %}
+    <div class="tenseBox">
+        <h3>{{ tense }}</h3>
+        <hr>
+        <table>
+            {% for p in ro.person %}
+            <tr>
+                {% if clearOutput(p, tense) == None %}
+                <th>{{ p }}</th>
+                {% else %}
+                <th>{{ clearOutput(p, tense) }}</th>
+                {% endif %}
+                <td>{{ conjugations['Conditional'][tense][p]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endfor %}
+</div>
+<div class="in-columns">
+<h2>Conjunctiv</h2>
+    {% for tense in ro.Conjunctiv %}
+    <div class="tenseBox">
+        <h3>{{ tense }}</h3>
+        <hr>
+        <table>
+            {% for p in ro.person %}
+            <tr>
+                {% if clearOutput(p, tense) == None %}
+                <th>{{ p }}</th>
+                {% else %}
+                <th>{{ clearOutput(p, tense) }}</th>
+                {% endif %}
+                <td>{{ conjugations['Conjunctiv'][tense][p]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endfor %}
+</div>
+</section>
+
+<h2>alții</h2>
+<section>
+    <div class="tenseBox">
+        <h3>Imperativ</h3>
+        <hr>
+        <table>
+            <tr>
+                <th>Affirm. tu:</th>
+                <td>{{ conjugations['Imperativ']['Imperativ Imperativ']['tu'] }}</td>
+            </tr>
+            <tr>
+                <th>Affirm. voi:</th>
+                <td>{{ conjugations['Imperativ']['Imperativ Imperativ']['voi'] }}</td>
+            </tr>
+            <tr>
+                <th>Negative:</th>
+                <td>{{ conjugations['Imperativ']['Imperativ Negativ']['nu'] }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="tenseBox">
+        <h3>Gerunziu, Participiu</h3>
+        <hr>
+        <table>
+            <tr>
+                <th>Gerunziu:</th>
+                <td>{{ conjugations['Gerunziu']['Gerunziu Gerunziu'] }}</td>
+            </tr>
+            <tr>
+                <th>Participiu:</th>
+                <td>{{ conjugations['Participiu']['Participiu Participiu'] }}</td>
+            </tr>
+        </table>
+    </div>
+</section>
+
+
+
+{% endblock %}

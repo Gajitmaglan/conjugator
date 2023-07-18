@@ -1,0 +1,195 @@
+{% macro fixConjugation(str) %}
+    {% if str == 'fal)' %}
+        falámos
+    {% else %}
+        {{ str }}
+    {% endif %}
+{% endmacro %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='tensesPage.css') }}">
+
+{% extends "form.html" %}
+
+{% block main %}
+
+<h1>Portuguese Verb Conjugations for <br> <strong>{{ verb }}</strong></h1>
+{% set type = pt.tenseTypesPT[0] %}
+
+<h2>Indicativo Mood</h2>
+<section>
+    {% for tense in pt.Indicativo_tenses %}
+    <div class="tenseBox">
+        
+        <h3>{{ tense }}</h3>
+        <hr>
+        <table>
+            {% for p in pt.person %}
+            <tr>
+                {% if clearOutput(p, tense) == None %}
+                <th>{{ p }}</th>
+                {% else %}
+                <th>{{ clearOutput(p, tense) }}</th>
+                {% endif %}
+                {% if conjugations[type][tense][p] == "fal)" %}
+                <td>falámos</td>
+                {% else %}
+                <td>{{ conjugations[type][tense][p] }}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endfor %}
+</section>
+
+{% set type = pt.tenseTypesPT[1] %}
+
+    <h2>Conjuntivo Mood</h2>
+<section>
+    {% for tense in pt.Conjuntivo_tenses %}
+    <div class="tenseBox">
+        <h3>{{ tense }}</h3>
+        <hr>
+        <table>
+            {% for p in pt.person %}
+            <tr>
+                {% if clearOutput(p, tense) == None %}
+                <th class="thPers">{{ p }}</th>
+                {% else %}
+                <th class="thPers">{{ clearOutput(p, tense) }}</th>
+                {% endif %}
+                <td class="thMain">{{ conjugations[type][tense][p]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endfor %}
+</section>
+
+<!--                                                          -------------------------- -->
+
+{% set type = pt.tenseTypesPT[2] %}
+
+<section>
+    
+    <div class="in-columns">
+    <h2>Conditional Mood</h2>
+    {% for tense in pt.Condicional_tenses %}
+    <div class="tenseBox">
+        <h3>{{ tense }}</h3>
+        <hr>
+        <table>
+            {% for p in pt.person %}
+            <tr>
+                {% if clearOutput(p, tense) == None %}
+                <th class="thPers">{{ p }}</th>
+                {% else %}
+                <th class="thPers">{{ clearOutput(p, tense) }}</th>
+                {% endif %}
+                <td class="thMain">{{ conjugations[type][tense][p]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endfor %}
+</div>
+
+{% set type = pt.tenseTypesPT[3] %}
+
+<div class="in-columns">
+<h2>Infinitivo Pessoal Mood</h2>
+{% for tense in pt.Infinitivo_pessoal_tenses %}
+<div class="tenseBox">
+    <h3>{{ tense }}</h3>
+    <hr>
+    <table>
+            {% for p in pt.person %}
+            <tr>
+                {% if clearOutput(p, tense) == None %}
+                <th class="thPers">{{ p }}</th>
+                {% else %}
+                <th class="thPers">{{ clearOutput(p, tense) }}</th>
+                {% endif %}
+                <td class="thMain">{{ conjugations[type][tense][p]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+        {% endfor %}
+    </div>
+    
+    <!-- ------------------------------------------------------------------------------------------ -->
+    
+    {% set type = pt.tenseTypesPT[5] %}
+    
+<div class="in-columns">
+<h2>Imperativo Mood</h2>
+{% for tense in pt.Imperativo_tenses %}
+<div class="tenseBox">
+    <h3>{{ tense }}</h3>
+    <hr>
+    <table>
+        {% for p in pt.person_sp %}
+        <tr>
+            {% if clearOutput(p, tense) == None %}
+            <th class="thPers">{{ p }}</th>
+            {% else %}
+            <th class="thPers">{{ clearOutput(p, tense) }}</th>
+            {% endif %}
+            <td class="thMain">{{ conjugations[type][tense][p]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endfor %}
+</div>
+
+</section>
+<!-- --------------------------------------------------     -->
+
+{% set type = pt.tenseTypesPT[3] %}
+
+<h2>Outros</h2>
+<section>
+    <div class="tenseBox">
+        <h3>Infinitivo</h3>
+        <hr>
+        <table>
+            {% for num in range(2) %}
+            <tr>
+                <th class="thPers">{{ num }}:</th>
+                <td class="thMain">{{ conjugations[type]['Infinitivo Infinitivo'][num]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+        
+    {% set type = pt.tenseTypesPT[4] %}
+    <div class="tenseBox">
+        <h3>Gerúndio</h3>
+        <hr>
+        <table>
+            {% for num in range(2) %}
+            <tr>
+                <th class="thPers">{{ num }}:</th>
+                <td class="thMain">{{ conjugations[type]['Gerúndio Gerúndio'][num]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    {% set type = pt.tenseTypesPT[6] %}
+    <div class="tenseBox">
+        <h3>Particípio</h3>
+        <hr>
+        <table>
+            <tr>
+                <th class="thPers">Particípio:</th>
+                <td class="thMain">{{ conjugations[type]['Particípio Particípio']}}</td>
+            </tr>
+            <tr><th>&nbsp;</th><th>&nbsp;</th></tr>
+        </table>
+    </div>
+</section>
+
+{% endblock %}
