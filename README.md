@@ -34,3 +34,14 @@ example path for Portuguese: localhost:5000/pt
 ```bash
 pip install mlconjug3
 ```
+
+## How it works
+
+(if deleted lines above): check language in the <nav> bar, then write a verb in the search bar above to see it's conjugations.
+Training functionality is not working yet, it will be similar to [Verbugata](https://www.verbugata.com/), but hopefully better.
+
+Each level on levels panel (one that looks like calculator) corresponds to 25 verbs, sorted by frequency. 2000 total for every language. Functionality is not working yet.
+
+## Future plans
+
+I want to rewrite this project on React and finish it. After finishing it will be an Open Source project for people to train Romance Language Verb Conjugations.
